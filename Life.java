@@ -68,6 +68,64 @@ public class Life {
       n++;
     }
 
+    public static void updateCells(int data[]){
+
+        int n = 1;
+        int b = 1;
+
+        //below, this is the array that I am assigning the new, edited values to.
+        //I must use this because I cannot tamper with the main data cells array while I am trying to check it for
+        //matches in the rules I have specified.
+        int[] newData = new int[data.length];
+
+        //first rule: if there is a one on each side of any cell, flip the value of that middle cell.
+
+        //second rule: if there are two cells of value '0' to the left of a cell with the value '1', make the cell directly
+        //to the left of the '1' cell, '1'.
+
+        //checking to see if rules are matched, and if they are, assigning the proper values to the new array.
+
+        // NEED TO IMPLEMENT 2-VAIABLE CYCLING TO MOVE THROUGH 2-D ARRAY, CHECKING FOR RULES ON THE
+        //INSIDE-MOST LOOP
+        //THESE RULES ARE TAKEN FROM THE CONWAY GAME OF LIFE FOUND ONLINE
+
+        //make sure that the cell being checked is not 9, if it is, break
+
+        while(n<9){
+            while(b<9){
+              //change these rules to match the Conway rules.
+              if(data[n-1]==1 && data[n+1]==1){ //first rule
+                  if(data[n] == 1){
+                      newData[n] = 0;
+                  }
+                  else{
+                      newData[n] = 1;
+                  }
+              }
+              else if(n>=2){
+                  if(!(data[n-2]==0  && data[n-1]==0 && data[n]==1)){ //second rule
+                      newData[n] = data[n];
+                  }
+                  else{
+                      newData[n-1] = 1;
+                      newData[n] = data[n]; //assign the newArray the same value
+                  }
+              }
+              else if (n<2){
+                  newData[n] = data[n]; //assign the newArray the same value
+              }
+              n++;
+        }
+
+        //copying the array I edited, to the one in use by displayCells.
+        n = 0;
+        while(n<data.length){
+            data[n] = newData[n];
+            n++;
+        }
+
+    }
+
   //initialize two dimensional array for grid
   //accept user input for coordinates, and for time steps
   //modify updateCells from last program to work on 2D array instead of 1D array
